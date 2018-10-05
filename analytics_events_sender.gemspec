@@ -10,8 +10,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ['SumLare']
   spec.email         = ['anohin56n@gmail.com']
 
-  spec.summary       = %q{TODO: Write a short summary, because RubyGems requires one.}
-  spec.description   = %q{TODO: Write a longer description or delete this line.}
+  spec.summary       = 'Event sender for multiple analuytics platforms'
+  spec.description   = 'Event sender for multiple analuytics platforms'
   spec.homepage      = 'https://github.com/SumLare/analytics_events_sender'
   spec.license       = 'MIT'
 
