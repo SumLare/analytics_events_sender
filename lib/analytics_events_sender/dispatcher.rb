@@ -26,7 +26,7 @@ module AnalyticsEventsSender
 
     def call
       @analytics_platforms.each do |platform|
-        platform.classify.constantize.call(@user, event_params)
+        Kernel.const_get("#{AnalyticsEventsSender}::#{platform.capitalize}").call(@user, event_params)
       end
     end
 
