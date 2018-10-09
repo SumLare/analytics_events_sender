@@ -8,8 +8,10 @@ module AnalyticsEventsSender
     end
 
     def call
+      return false unless @user.appsflyer_id
+
       api_key = AnalyticsEventsSender.configuration.appsflyer.dig(:api_key)
-      response = HTTParty.post(BASE_URL, body: event_params, headers: { 'authentication'=api_key })
+      response = HTTParty.post(BASE_URL, body: event_params, headers: { authentication: api_key })
 
       return false unless response.success?
     end
@@ -23,7 +25,7 @@ module AnalyticsEventsSender
 
     def prepated_params
       customer_params = {
-        appsflyer_id: 123, customer_user_id: @user.id, af_events_api: true
+        appsflyer_id: @user.appsflyer_id, customer_user_id: @user.id, af_events_api: true
       }
       customer_params.merge(event_params).to_json
     end
