@@ -13,6 +13,7 @@ module AnalyticsEventsSender
 
     def initialize(params, user, analytics_platforms = DEFAULT_PLATFORMS)
       @user = user
+      @analytics_platforms = analytics_platforms
       @cancelation_date = params.dig(:cancellation_date)
       @event_name = params[:notification_type]
       @trial = params.dig(:latest_receipt_info, :is_trial_period)
