@@ -6,6 +6,7 @@ require 'analytics_events_sender/dispatcher'
 require 'analytics_events_sender/amplitude'
 require 'analytics_events_sender/appmetrica'
 require 'analytics_events_sender/mixpanel'
+require 'analytics_events_sender/appsflyer'
 require 'analytics_events_sender/version'
 
 module AnalyticsEventsSender
