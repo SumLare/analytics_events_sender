@@ -1,7 +1,7 @@
 module AnalyticsEventsSender
   class Mixpanel
     BASE_URL = 'https://api.mixpanel.com/track/'.freeze
-    SUCCESS_CODE = 1.freeze
+    SUCCESS_CODE = 1
 
     def initialize(user, params = {}, event_name)
       @user = user
