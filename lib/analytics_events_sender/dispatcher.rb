@@ -15,11 +15,12 @@ module AnalyticsEventsSender
       @user = user
       @analytics_platforms = analytics_platforms
       @cancelation_date = params.dig(:cancellation_date)
-      @event_name = params[:notification_type]
+      @event_name = params.dig(:notification_type)
       @trial = params.dig(:latest_receipt_info, :is_trial_period)
       @purchase_date = params.dig(:latest_receipt_info, :original_purchase_date).to_datetime
-      @product_id = params[:auto_renew_product_id]
+      @product_id = params.dig(:auto_renew_product_id)
       @period = user.receipt[:latest_receipt_info].count
+      @new_product_id = params.dig(:latest_receipt_info)
     end
 
     private
@@ -33,15 +34,15 @@ module AnalyticsEventsSender
     def event_params
       case @event_name
       when CANCELATION_EVENT
-        { cancelation_date: @cancelation_date, canceledTrial: true, period: @period, subscription_id: @subscription_id }
+        { cancelation_date: @cancelation_date, canceledTrial: true, period: @period, subscription_id: @product_id }
       when BUY_EVENT
         { trial: @trial, purhcase_date: @purchase_date, subscription_id: @product_id }
       when RENEWAL_EVENT || INTERACTIVE_RENEWAL_EVENT
-        { conversion_from_trial: true, period: @period, subscription_id: @subscription_id }
+        { conversion_from_trial: true, period: @period, subscription_id: @product_id }
       when CHANGE_PLAN_EVENT
         {
-          conversion_from_trial: true, old_subscription_id: @old_subscription_id,
-          new_subscription_id: @new_subscription_id, period: @period
+          conversion_from_trial: true, old_subscription_id: @product_id,
+          new_subscription_id: @new_product_id, period: @period
         }
       end
     end

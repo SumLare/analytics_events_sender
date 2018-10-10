@@ -6,6 +6,7 @@ module AnalyticsEventsSender
     def ininialize(user, params = {})
       @user = user
       @params = params
+      @event_name = params.dig(:notification_type)
     end
 
     def call
@@ -28,7 +29,7 @@ module AnalyticsEventsSender
 
     def prepared_json
       {
-        event: @enent_name,
+        event: @event_name,
         properties: {
           token: AnalyticsEventsSender.configuration.mixpanel.dig(:token),
           distinct_id: @user.id

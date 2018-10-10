@@ -5,6 +5,7 @@ module AnalyticsEventsSender
     def ininialize(user, params = {})
       @user = user
       @params = params
+      @event_name = params.dig(:notification_type)
     end
 
     def call
