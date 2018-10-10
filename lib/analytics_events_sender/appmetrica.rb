@@ -1,15 +1,15 @@
 module AnalyticsEventsSender
   class Appmetrica
-    BASE_URL = 'https://api.appmetrica.yandex.com/logs/v1/import/events.csv'.freeze
+    BASE_URL = 'https://api.appmetrica.yandex.com/logs/v1/import/events'.freeze
 
-    def ininialize(user, params = {})
+    def initialize(user, params = {}, event_name)
       @user = user
       @params = params
-      @event_name = params.dig(:notification_type)
+      @event_name = event_name
     end
 
     def call
-      response = HTTParty.post(complete_url, body: prepared_params, format: :json)
+      response = HTTParty.post(complete_url + '&' + prepared_params)
 
       return false unless response.success?
     end
@@ -27,7 +27,7 @@ module AnalyticsEventsSender
         application_id: AnalyticsEventsSender.configuration.appmetrica.dig(:app_id),
         profile_id: @user.id, event_name: @event_name,
         event_timestamp: Time.now.to_i, event_json: @params.to_json
-      }
+      }.map { |key, value| "#{key}=#{value}" }.join('&')
     end
   end
 end

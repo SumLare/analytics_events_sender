@@ -2,7 +2,7 @@ module AnalyticsEventsSender
   class Appsflyer
     BASE_URL = 'https://api2.appsflyer.com/inappevent'.freeze
 
-    def ininialize(user, params = {})
+    def initialize(user, params = {})
       @user = user
       @params = params
       @event_name = params.dig(:notification_type)

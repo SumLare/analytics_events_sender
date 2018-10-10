@@ -7,10 +7,6 @@ module AnalyticsEventsSender
     CHANGE_PLAN_EVENT = 'DID_CHANGE_RENEWAL_PREF'.freeze
     DEFAULT_PLATFORMS = %w[amplitude appmetrica appsflyer mixpanel].freeze
 
-    def self.call(user, params, analytics_platforms)
-      new(user, params, analytics_platforms).call
-    end
-
     def initialize(params, user, analytics_platforms = DEFAULT_PLATFORMS)
       @user = user
       @analytics_platforms = analytics_platforms
@@ -19,17 +15,17 @@ module AnalyticsEventsSender
       @trial = params.dig(:latest_receipt_info, :is_trial_period)
       @purchase_date = params.dig(:latest_receipt_info, :original_purchase_date).to_datetime
       @product_id = params.dig(:auto_renew_product_id)
-      @period = user.receipt[:latest_receipt_info].count
+      @period = user.receipt['latest_receipt_info'].count
       @new_product_id = params.dig(:latest_receipt_info)
     end
 
-    private
-
     def call
       @analytics_platforms.each do |platform|
-        Kernel.const_get("#{AnalyticsEventsSender}::#{platform.capitalize}").call(@user, event_params)
+        Kernel.const_get("#{AnalyticsEventsSender}::#{platform.capitalize}").new(@user, event_params, @event_name).call
       end
     end
+
+    private
 
     def event_params
       case @event_name

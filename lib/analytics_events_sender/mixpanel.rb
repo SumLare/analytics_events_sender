@@ -1,12 +1,12 @@
 module AnalyticsEventsSender
   class Mixpanel
     BASE_URL = 'https://api.mixpanel.com/track/'.freeze
-    SUCCESS_CODE = '1'.freeze
+    SUCCESS_CODE = 1.freeze
 
-    def ininialize(user, params = {})
+    def initialize(user, params = {}, event_name)
       @user = user
       @params = params
-      @event_name = params.dig(:notification_type)
+      @event_name = event_name
     end
 
     def call
@@ -34,7 +34,7 @@ module AnalyticsEventsSender
           token: AnalyticsEventsSender.configuration.mixpanel.dig(:token),
           distinct_id: @user.id
         }.merge(@params)
-      }
+      }.to_json
     end
   end
 end
