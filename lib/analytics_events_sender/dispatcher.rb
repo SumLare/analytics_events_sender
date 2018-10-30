@@ -13,7 +13,7 @@ module AnalyticsEventsSender
       @cancelation_date = params.dig(:cancellation_date)
       @event_name = params.dig(:notification_type)
       @trial = params.dig(:latest_receipt_info, :is_trial_period)
-      @purchase_date = params.dig(:latest_receipt_info, :original_purchase_date).to_datetime
+      @purchase_date = params.dig(:latest_receipt_info, :original_purchase_date)&.to_datetime
       @product_id = params.dig(:auto_renew_product_id)
       @period = user.receipt['latest_receipt_info'].count
       @new_product_id = params.dig(:latest_receipt_info)
