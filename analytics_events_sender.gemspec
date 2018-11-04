@@ -10,8 +10,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ['SumLare']
   spec.email         = ['anohin56n@gmail.com']
 
-  spec.summary       = 'Event sender for multiple analuytics platforms'
-  spec.description   = 'Event sender for multiple analuytics platforms'
+  spec.summary       = 'Event sender for multiple analytics platforms'
+  spec.description   = 'Event sender for multiple analytics platforms'
   spec.homepage      = 'https://github.com/SumLare/analytics_events_sender'
   spec.license       = 'MIT'
 

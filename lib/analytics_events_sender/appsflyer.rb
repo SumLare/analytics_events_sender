@@ -34,7 +34,7 @@ module AnalyticsEventsSender
     def event_params
       {
         event_name: @event_name,
-        event_value: @params.transform_values(&:to_s)}.to_s,
+        event_value: @params.transform_values(&:to_s).to_s,
         event_time: @event_time
       }.transform_keys { |key| key.to_s.split('_').map(&:capitalize).join }
         .transform_values(&:to_s)
